@@ -13,7 +13,10 @@ require_once('simplehtmldom.php');
 //--------------------------------------------------------------------
 
 function autover_activate() {
+	autover_delete_options();
+
 	add_option('autover_dev_mode', array('1','1') );
+	add_option('autover_is_working', true );
 
 	add_option('autover_versioned_css_files', array() );
 	add_option('autover_not_versioned_css_files', array() );
@@ -28,7 +31,15 @@ register_activation_hook(__FILE__,'autover_activate');
 //--------------------------------------------------------------------
 
 function autover_deactivate() {
+	autover_delete_options();
+}
+register_deactivation_hook(__FILE__,'autover_deactivate');
+
+//--------------------------------------------------------------------
+
+function autover_delete_options() {
 	delete_option('autover_dev_mode');
+	delete_option('autover_is_working');
 
 	delete_option('autover_versioned_css_files');
 	delete_option('autover_not_versioned_css_files');
@@ -38,7 +49,6 @@ function autover_deactivate() {
 	delete_option('autover_not_versioned_js_files');
 	delete_option('autover_not_correct_js_files');
 }
-register_deactivation_hook(__FILE__,'autover_deactivate');
 
 //--------------------------------------------------------------------
 //
@@ -68,6 +78,12 @@ function autover_str_between( $start, $end, $content ) {
 	}
 
 	return '';
+}
+
+//------------------------------------------------------------------------
+
+function autover_string2link($string) {
+	return '<a href="'.$string.'">'.$string.'</a>';
 }
 
 //--------------------------------------------------------------------
@@ -201,10 +217,10 @@ function autover_version_filter($src) {
 function autover_update_options() {
 	$autover_dev_mode_value = array( '', '' );
 
-	$status = false;
+	$autover_is_working = false;
 	if ( isset( $_POST['autover_dev_mode_style'] ) ) {
 		$autover_dev_mode_value[0] = '1';
-		$status = true;
+		$autover_is_working = true;
 	} else {
 		delete_option('autover_versioned_css_files');
 		delete_option('autover_not_versioned_css_files');
@@ -213,7 +229,7 @@ function autover_update_options() {
 
 	if ( isset( $_POST['autover_dev_mode_script'] ) ) {
 		$autover_dev_mode_value[1] = '1';
-		$status = true;
+		$autover_is_working = true;
 	} else {
 		delete_option('autover_versioned_js_files');
 		delete_option('autover_not_versioned_js_files');
@@ -221,8 +237,9 @@ function autover_update_options() {
 	}
 
 	update_option('autover_dev_mode', $autover_dev_mode_value);
+	update_option('autover_is_working', $autover_is_working );
 
-	if ($status) { ?>
+	if ($autover_is_working) { ?>
 		<div id="message" class="updated fade">
 			<p><strong>Saved options!</strong></p>
 		</div>
@@ -235,17 +252,7 @@ function autover_update_options() {
 		delete_option('autover_versioned_js_files');
 		delete_option('autover_not_versioned_js_files');
 		delete_option('autover_not_correct_js_files');
-?>
-		<div id="message" class="error fade">
-			<p>
-				<strong>
-					<span style="color:brown;">
-						This plugin is currently not used!
-					</span>
-				</strong>
-			</p>
-		</div>
-	<?php }
+		}
 }
 //--------------------------------------------------------------------
 
@@ -275,6 +282,21 @@ function autover_options() {
 
 <?php if ( $tab == 'important' ) { ?>
 
+<?php
+	$autover_is_working = get_option('autover_is_working', false); 
+	if ( !$autover_is_working ) { ?>
+		<div id="message" class="error fade">
+			<p>
+				<strong>
+					<span style="color:brown;">
+						This plugin is currently not used!
+					</span>
+				</strong>
+			</p>
+		</div>
+<?php
+	}
+?>
 
 
 
@@ -289,7 +311,7 @@ If you want to use the functionality of this plugin you must add
 <h3><span style="color:black;font-weight:bold;">Example:</span></h3>
 
 <h3><span style="color:green;font-weight:bold;">YES</span></h3>
-<p style="background:#eaeaea; padding:5px;">
+<p style="background:#eaeaea; padding:5px;" title="CORRECT CODE">
 <?php
 $string = "<?php
 function autover_add_style_and_script() {
@@ -305,7 +327,7 @@ highlight_string($string); ?>
 <!--img src="<?php echo plugins_url('/img/wp-enqueue.png', __FILE__); ?>" alt="wp-enqueue" title="CORRECT CODE"-->
 
 <h3><span style="color:red;font-weight:bold;">NO</span></h3>
-<p style="background:#eaeaea; padding:5px;">
+<p style="background:#eaeaea; padding:5px;" title="DO NOT USE THIS CODE">
 <?php
 $string = "<?php
 function autover_add_style_and_script() {
@@ -323,7 +345,7 @@ highlight_string($string); ?>
 <!--img src="<?php echo plugins_url('/img/wp-head.png', __FILE__); ?>" alt="wp-head" title="DO NOT USE THIS CODE"-->
 
 <h3 style="font-weight:normal;">If you want to use <strong>'wp_enqueue_style'</strong> to add your <strong>'style.css'</strong> of your theme.<br />Add the next code to your theme file <strong>'functions.php'</strong> <span style="color:red;font-weight:bold;">and remove your &lt;link&gt; tag</span> from <strong>'header.php'</strong> which refer to your <strong>'style.css'</strong>.</h3>
-<p style="background:#eaeaea; padding:5px;">
+<p style="background:#eaeaea; padding:5px;" title="add this code to 'functions.php' file">
 <?php
 $string = "<?php
 function mythemename_style() {
@@ -350,7 +372,21 @@ highlight_string($string); ?>
 
 <?php if ( $tab == 'settings' ) { ?>
 
-<?php 
+<?php
+	$autover_is_working = get_option('autover_is_working', false); 
+	if ( !$autover_is_working ) { ?>
+		<div id="message" class="error fade">
+			<p>
+				<strong>
+					<span style="color:brown;">
+						This plugin is currently not used!
+					</span>
+				</strong>
+			</p>
+		</div>
+<?php
+	}
+
 	$autover_dev_mode = get_option('autover_dev_mode');
 	$dev_mode_checked = array('','');
 	for ( $k = 0; $k < 2; $k++ )
@@ -413,6 +449,22 @@ highlight_string($string); ?>
 
 <?php if ( $tab == 'lists' ) { ?>
 
+<?php
+	$autover_is_working = get_option('autover_is_working', false); 
+	if ( !$autover_is_working ) { ?>
+		<div id="message" class="error fade">
+			<p>
+				<strong>
+					<span style="color:brown;">
+						This plugin is currently not used!
+					</span>
+				</strong>
+			</p>
+		</div>
+<?php
+	}
+?>
+
 <?php if ( isset($_POST['reset_lists']) ) autover_reset_lists(); ?>
 
 <?php if ( isset($_POST['refresh_lists']) ) autover_refresh_lists(); ?>
@@ -425,9 +477,11 @@ highlight_string($string); ?>
 </form>
 
 <?php
-	autover_show_not_correct_files();
-	autover_show_versioned_files(); 
-	autover_show_not_versioned_files();
+	if ( $autover_is_working ) {
+		autover_show_not_correct_files();
+		autover_show_versioned_files(); 
+		autover_show_not_versioned_files();
+	} 
 ?>
 
 <?php } ?>
@@ -473,10 +527,13 @@ if ( !empty( $autover_versioned_css_files ) ) { ?>
 <pre>
 <legend><strong>Versioned CSS files:</strong></legend>
 <?php
+	$k = 1;
 	$empty_list = true;
+	sort($autover_versioned_css_files);
 	foreach( $autover_versioned_css_files as $versioned_css_file ) {
-		echo $versioned_css_file."\n";
+		echo $k . ") " . autover_string2link($versioned_css_file)."\n";
 		$empty_list = false;
+		$k++;
 	}
 ?>
 </pre>
@@ -494,10 +551,13 @@ if ( !empty( $autover_versioned_js_files ) ) { ?>
 <pre>
 <legend><strong>Versioned JS files:</strong></legend>
 <?php
+	$k = 1;
 	$empty_list = true;
+	sort($autover_versioned_js_files);
 	foreach( $autover_versioned_js_files as $versioned_js_file ) {
-		echo $versioned_js_file."\n";
+		echo $k . ") " . autover_string2link($versioned_js_file)."\n";
 		$empty_list = false;
+		$k++;
 	}
 ?>
 </pre>
@@ -520,15 +580,19 @@ $autover_not_versioned_css_files = get_option('autover_not_versioned_css_files',
 if ( !empty( $autover_not_versioned_css_files ) ) { 
 $message = true;
 ?>
-<p>For various reason, the next files are not versioned!</p>
+<p>From various reasons, the next files are not versioned!</p>
 <fieldset>
 <pre>
 <legend><strong>Not versioned CSS files:</strong></legend>
 <?php
+	$k = 1;
 	$empty_list = true;
+
+	sort($autover_not_versioned_css_files);
 	foreach( $autover_not_versioned_css_files as $not_versioned_css_file ) {
-		echo $not_versioned_css_file."\n";
+		echo $k . ") " . autover_string2link($not_versioned_css_file)."\n";
 		$empty_list = false;
+		$k++;
 	}
 ?>
 </pre>
@@ -549,10 +613,14 @@ if (!$message) { ?>
 <pre>
 <legend><strong>Not versioned JS files:</strong></legend>
 <?php
+	$k = 1;
 	$empty_list = true;
+
+	sort($autover_not_versioned_js_files);
 	foreach( $autover_not_versioned_js_files as $not_versioned_js_file ) {
-		echo $not_versioned_js_file."\n";
+		echo $k . ") " . autover_string2link($not_versioned_js_file)."\n";
 		$empty_list = false;
+		$k++;
 	}
 ?>
 </pre>
@@ -618,15 +686,21 @@ $out_scripts = get_option('autover_not_correct_js_files', null);
 <?php if ( !empty($out_links) || !empty($out_scripts) ) { ?>
 <legend><strong>Add the next files with correct method:</strong></legend>
 <?php
+	$k = 1;
 	$empty_list = true;
+
+	sort($out_links);
 	foreach($out_links as $link) {
-		echo $link . "\n";
+		echo $k . ") " . autover_string2link($link) . "\n";
 		$empty_list = false;
+		$k++;
 	}
 
+	sort($out_scripts);
 	foreach($out_scripts as $script) {
-		echo $script . "\n";
+		echo $k . ") " . autover_string2link($script) . "\n";
 		$empty_list = false;
+		$k++;
 	}
 }
 ?>

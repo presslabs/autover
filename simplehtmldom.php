@@ -68,6 +68,9 @@ define('MAX_FILE_SIZE', 600000);
 // -----------------------------------------------------------------------------
 // get html dom from file
 // $maxlen is defined in the code as PHP_STREAM_COPY_ALL which is defined as -1.
+
+if ( ! function_exists( 'file_get_html' ) ) :
+
 function file_get_html($url, $use_include_path = false, $context=null, $offset = -1, $maxLen=-1, $lowercase = true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
 {
 	// We DO force the tags to be terminated.
@@ -85,7 +88,12 @@ function file_get_html($url, $use_include_path = false, $context=null, $offset =
 	return $dom;
 }
 
+endif;
+
 // get html dom from string
+
+if ( ! function_exists( 'str_get_html' ) ) :
+
 function str_get_html($str, $lowercase=true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
 {
 	$dom = new simple_html_dom(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
@@ -98,12 +106,18 @@ function str_get_html($str, $lowercase=true, $forceTagsClosed=true, $target_char
 	return $dom;
 }
 
+endif;
+
 // dump html dom tree
+
+if ( ! function_exists( 'dump_html_tree' ) ) :
+
 function dump_html_tree($node, $show_attr=true, $deep=0)
 {
 	$node->dump($node);
 }
 
+endif;
 
 /**
  * simple html dom node

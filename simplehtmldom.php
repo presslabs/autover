@@ -112,6 +112,8 @@ function dump_html_tree($node, $show_attr=true, $deep=0)
  *
  * @package PlaceLocalInclude
  */
+if ( ! class_exists( 'simple_html_dom_node' ) ) :
+	
 class simple_html_dom_node
 {
 	public $nodetype = HDOM_TYPE_TEXT;
@@ -961,6 +963,8 @@ class simple_html_dom_node
 
 }
 
+endif;
+
 /**
  * simple html dom parser
  * Paperg - in the find routine: allow us to specify that we want case insensitive testing of the value of the selector.
@@ -969,6 +973,8 @@ class simple_html_dom_node
  *
  * @package PlaceLocalInclude
  */
+if ( ! class_exists( 'simple_html_dom' ) ) :
+
 class simple_html_dom
 {
 	public $root = null;
@@ -1718,4 +1724,6 @@ class simple_html_dom
 	function getElementsByTagName($name, $idx=-1) {return $this->find($name, $idx);}
 	function loadFile() {$args = func_get_args();$this->load_file($args);}
 }
+
+endif;
 

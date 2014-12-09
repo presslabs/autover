@@ -90,12 +90,8 @@ function autover_string2link($string) {
 //
 // Remove the query from src.
 //
-function autover_remove_query($src) {
-	$src_query = autover_str_between( '?', '#', $src . '#' ); // Find the query.
-	$src_with_no_query = str_replace( $src_query, '', $src ); // Remove query if exist.
-	$src_with_no_query = str_replace( '?', '', $src_with_no_query ); // Remove '?' char.
-
-	return $src_with_no_query;
+function autover_remove_query( $src ) {
+	return preg_replace( '/\?.*/', '', $src );
 }
 
 //--------------------------------------------------------------------

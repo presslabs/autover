@@ -424,8 +424,7 @@ function autover_show_versioned_files() {
 	if ( ! empty( $autover_versioned_css_files ) ) { ?>
 		<fieldset>
 		<pre>
-		<legend><strong>Versioned CSS files:</strong></legend>
-	<?php
+		<legend><strong>Versioned CSS files:</strong></legend><?php
 		$k = 1;
 		$empty_list = true;
 		sort( $autover_versioned_css_files );
@@ -443,8 +442,7 @@ function autover_show_versioned_files() {
 	if ( ! empty( $autover_versioned_js_files ) ) { ?>
 		<fieldset>
 		<pre>
-		<legend><strong>Versioned JS files:</strong></legend>
-	<?php
+		<legend><strong>Versioned JS files:</strong></legend><?php
 		$k = 1;
 		$empty_list = true;
 		sort( $autover_versioned_js_files );
@@ -468,8 +466,7 @@ function autover_show_not_versioned_files() {
 		<p>From various reasons, the next files are not versioned!</p>
 		<fieldset>
 		<pre>
-		<legend><strong>Not versioned CSS files:</strong></legend>
-	<?php
+		<legend><strong>Not versioned CSS files:</strong></legend><?php
 		$k = 1;
 		$empty_list = true;
 
@@ -491,8 +488,7 @@ function autover_show_not_versioned_files() {
 		<?php } ?>
 		<fieldset>
 		<pre>
-		<legend><strong>Not versioned JS files:</strong></legend>
-	<?php
+		<legend><strong>Not versioned JS files:</strong></legend><?php
 		$k = 1;
 		$empty_list = true;
 
@@ -553,8 +549,7 @@ function autover_show_not_correct_files() {
 	<fieldset>
 	<pre>
 	<?php if ( ! empty( $out_links ) || ! empty( $out_scripts ) ) { ?>
-	<legend><strong>Add the next files with correct method:</strong></legend>
-	<?php
+	<legend><strong>Add the next files with correct method:</strong></legend><?php
 		$k = 1;
 		$empty_list = true;
 

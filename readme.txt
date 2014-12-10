@@ -3,8 +3,8 @@ Contributors: PressLabs, olarmarius
 Donate link: http://www.presslabs.com/
 Tags: auto, automatic, pages, head, css, wp-enqueue, filter, javascript, script, style, ver, version, versioning, autover, presslabs
 Requires at least: 3.5.1
-Tested up to: 3.5
-Stable tag: 1.3
+Tested up to: 4.1
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,13 @@ If you want to automatically version your CSS and JavaScript files, this will he
 
 == Changelog ==
 
+= 1.4 =
+* add cron job to reset the lists
+* remove `*.xcf` files
+* formatted PHP code to WP std.
+* use `preg_replace` to remove the query string
+* fix `PHP Notice: Undefined variable: filetype`
+
 = 1.3 =
 * add file lists.
 
@@ -51,6 +58,13 @@ If you want to automatically version your CSS and JavaScript files, this will he
 * start version on WP.
 
 == Upgrade Notice ==
+
+= 1.4. =
+* Add cron job to reset the lists
+* Remove `*.xcf` files
+* Formatted PHP code to WP std.
+* Use `preg_replace` to remove the query string
+* Fix `PHP Notice: Undefined variable: filetype`
 
 = 1.3 =
 Add file lists.

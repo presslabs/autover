@@ -87,68 +87,67 @@ function autover_add_incorrect_style_and_script() {
 //add_action('admin_head', 'autover_add_incorrect_style_and_script');
 
 function autover_version_filter( $src ) {
-	// Return the  file with the new version
-	$out_src = $src;
+	$out_src = $src; // Return the  file with the new version
 
-	// Remove the old version if exist.
-	$src_with_no_query = autover_remove_query( $out_src );
+	$src_with_no_query = autover_remove_query( $out_src ); // Remove the old version if exist
 
 	// Get the filetype of the file (JS or CSS)
-	( strtolower( substr( $src_with_no_query, -2 ) ) == 'js' ) ? $filetype = 'js' : null ;
-	( strtolower( substr( $src_with_no_query, -3 ) ) == 'css' ) ? $filetype = 'css' : null ;
+	( 'js' == strtolower( substr( $src_with_no_query, -2 ) ) ) ? $filetype = 'js' : null ;
+	( 'css' == strtolower( substr( $src_with_no_query, -3 ) ) ) ? $filetype = 'css' : null ;
 
-	$active = false;
-	$autover_dev_mode = get_option( 'autover_dev_mode', array( '', '' ) );
-	if ( ( ( $autover_dev_mode[0] <> '' ) && ( $filetype == 'css' ) ) || ( ( $autover_dev_mode[1] <> '' ) && ( $filetype == 'js' ) ) ) {
-		$active = true;
-	}
-	// get versioned/not_versioned files
-	$autover_versioned_files = get_option( 'autover_versioned_' . $filetype . '_files', array() );
-	$autover_not_versioned_files = get_option( 'autover_not_versioned_' . $filetype . '_files', array() );
-
-	// Parse the url of the input file
-	$src_parsed = parse_url( $out_src );
-	$src_path   = $src_parsed['path'];
-
-	$filename = $_SERVER['DOCUMENT_ROOT'] . $src_path;
-	if ( is_file( $filename ) ) {
-		$timestamp_version = filemtime( $filename ); // Extract the modification time of the input file
-
-		if ( null == $timestamp_version ) {
-			$timestamp_version = filemtime( utf8_decode( $filename ) );
+	if ( ! empty( $filetype ) ) {
+		$active = false;
+		$autover_dev_mode = get_option( 'autover_dev_mode', array( '', '' ) );
+		if ( ( ( $autover_dev_mode[0] <> '' ) && ( $filetype == 'css' ) ) || ( ( $autover_dev_mode[1] <> '' ) && ( $filetype == 'js' ) ) ) {
+			$active = true;
 		}
-	} else {
-		// Add not versioned files
-		array_push( $autover_not_versioned_files, $out_src );
-		$autover_not_versioned_files = array_unique( $autover_not_versioned_files );
-		sort( $autover_not_versioned_files );
-		update_option( 'autover_not_versioned_' . $filetype . '_files', $autover_not_versioned_files );
+		// get versioned/not_versioned files
+		$autover_versioned_files = get_option( 'autover_versioned_' . $filetype . '_files', array() );
+		$autover_not_versioned_files = get_option( 'autover_not_versioned_' . $filetype . '_files', array() );
 
-		return $out_src;
+		// Parse the url of the input file
+		$src_parsed = parse_url( $out_src );
+		$src_path   = $src_parsed['path'];
+
+		$filename = $_SERVER['DOCUMENT_ROOT'] . $src_path;
+		if ( is_file( $filename ) ) {
+			$timestamp_version = filemtime( $filename ); // Extract the modification time of the input file
+
+			if ( null == $timestamp_version ) {
+				$timestamp_version = filemtime( utf8_decode( $filename ) );
+			}
+		} else {
+			// Add not versioned files
+			array_push( $autover_not_versioned_files, $out_src );
+			$autover_not_versioned_files = array_unique( $autover_not_versioned_files );
+			sort( $autover_not_versioned_files );
+			update_option( 'autover_not_versioned_' . $filetype . '_files', $autover_not_versioned_files );
+
+			return $out_src;
+		}
+
+		// If the file is not on the server then return the input file.
+		if ( ( $timestamp_version == '' ) || ( null == $timestamp_version ) ) {
+			// Add not versioned files
+			array_push( $autover_not_versioned_files, $out_src );
+			$autover_not_versioned_files = array_unique( $autover_not_versioned_files );
+			sort( $autover_not_versioned_files );
+			update_option( 'autover_not_versioned_' . $filetype . '_files', $autover_not_versioned_files );
+
+			return $out_src;
+		}
+
+		// Create the new version
+		$src_with_new_version = $src_with_no_query . '?ver=' . $timestamp_version;
+
+		// Add versioned files
+		array_push( $autover_versioned_files, $src_with_no_query );
+		$autover_versioned_files = array_unique( $autover_versioned_files );
+		sort( $autover_versioned_files );
+		update_option( 'autover_versioned_' . $filetype . '_files', $autover_versioned_files );
+
+		if ( $active ) { $out_src = $src_with_new_version; }
 	}
-
-	// If the file is not on the server then return the input file.
-	if ( ( $timestamp_version == '' ) || ( null == $timestamp_version ) ) {
-		// Add not versioned files
-		array_push( $autover_not_versioned_files, $out_src );
-		$autover_not_versioned_files = array_unique( $autover_not_versioned_files );
-		sort( $autover_not_versioned_files );
-		update_option( 'autover_not_versioned_' . $filetype . '_files', $autover_not_versioned_files );
-
-		return $out_src;
-	}
-
-	// Create the new version
-	$src_with_new_version = $src_with_no_query . '?ver=' . $timestamp_version;
-
-	// Add versioned files
-	array_push( $autover_versioned_files, $src_with_no_query );
-	$autover_versioned_files = array_unique( $autover_versioned_files );
-	sort( $autover_versioned_files );
-	update_option( 'autover_versioned_' . $filetype . '_files', $autover_versioned_files );
-
-	if ( $active ) { $out_src = $src_with_new_version; }
-
 	return $out_src;
 }
 

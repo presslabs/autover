@@ -15,30 +15,29 @@ function autover_activate() {
 
 	add_option( 'autover_dev_mode', array( '1', '1' ) );
 	add_option( 'autover_is_working', true );
-
 	add_option( 'autover_versioned_css_files', array() );
 	add_option( 'autover_not_versioned_css_files', array() );
 	add_option( 'autover_not_correct_css_files', array() );
-
 	add_option( 'autover_versioned_js_files', array() );
 	add_option( 'autover_not_versioned_js_files', array() );
 	add_option( 'autover_not_correct_js_files', array() );
+
+	wp_schedule_event( time(), 'daily', 'autover_reset_lists_event' );
 }
 register_activation_hook( __FILE__, 'autover_activate' );
 
 function autover_deactivate() {
 	autover_delete_options();
+	wp_clear_scheduled_hook( 'autover_reset_lists_event' );
 }
 register_deactivation_hook( __FILE__, 'autover_deactivate' );
 
 function autover_delete_options() {
 	delete_option( 'autover_dev_mode' );
 	delete_option( 'autover_is_working' );
-
 	delete_option( 'autover_versioned_css_files' );
 	delete_option( 'autover_not_versioned_css_files' );
 	delete_option( 'autover_not_correct_css_files' );
-
 	delete_option( 'autover_versioned_js_files' );
 	delete_option( 'autover_not_versioned_js_files' );
 	delete_option( 'autover_not_correct_js_files' );
@@ -413,6 +412,7 @@ function autover_reset_lists() {
 	update_option( 'autover_not_correct_css_files', array() );
 	update_option( 'autover_not_correct_js_files', array() );
 }
+add_action( 'autover_reset_lists_event', 'autover_reset_lists' );
 
 function autover_refresh_lists() {
 	// Scan the Homepage and detect the files added wrong (CSS and JS files)

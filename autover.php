@@ -8,7 +8,7 @@
  * Author URI: http://presslabs.com/
  */
 
-require_once( 'simplehtmldom.php' );
+require_once( 'lib/simplehtmldom.php' );
 
 function autover_activate() {
 	autover_delete_options();

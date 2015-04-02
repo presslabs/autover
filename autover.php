@@ -5,7 +5,7 @@
  * Description: Automatically version your CSS and JS files.
  * Author: Presslabs
  * Version: 1.4
- * Author URI: http://presslabs.com/
+ * Author URI: http://www.presslabs.com/
  */
 
 require_once( 'lib/simplehtmldom.php' );

@@ -3,7 +3,7 @@
  * Plugin Name: AutoVer
  * Plugin URI: http://wordpress.org/extend/plugins/autover/
  * Description: Automatically version your CSS and JS files.
- * Author: PressLabs
+ * Author: Presslabs
  * Version: 1.4
  * Author URI: http://presslabs.com/
  */
@@ -247,11 +247,11 @@ If you want to use the functionality of this plugin you must add
 <?php
 $string = "<?php
 function autover_add_style_and_script() {
-	wp_enqueue_style('autover', plugins_url('/autover/mystyle.css',__FILLE_));
-	wp_enqueue_script('autover', plugins_url('/autover/myscript.js',__FILLE_));
+	wp_enqueue_style( 'style-name', plugins_url( '/autover/mystyle.css', __FILE__ ) );
+	wp_enqueue_script( 'script-name', plugins_url( '/autover/myscript.js', __FILE__ ) );
 }
-add_action('wp_enqueue_scripts','autover_add_style_and_script');
-add_action('admin_enqueue_scripts','autover_add_style_and_script');
+add_action( 'wp_enqueue_scripts', 'autover_add_style_and_script' );
+add_action( 'admin_enqueue_scripts', 'autover_add_style_and_script' );
 ?>";
 highlight_string( $string ); ?>
 </p>
@@ -263,13 +263,13 @@ highlight_string( $string ); ?>
 <?php
 $string = "<?php
 function autover_add_style_and_script() {
-echo \"<link rel='stylesheet' href='\".plugins_url('/autover/mystyle.js',__FILLE_)
+echo \"<link rel='stylesheet' href='\".plugins_url( '/autover/mystyle.js', __FILE__ )
 	.\"' type='test/css' media='all' />
-<script src='\".plugins_url('/autover/mystyle.css',__FILLE_).\"'></script>
+<script src='\".plugins_url( '/autover/mystyle.css', __FILE__ ).\"'></script>
 \";
 }
-add_action('wp_head','autover_add_style_and_script');
-add_action('admin_head','autover_add_style_and_script');
+add_action( 'wp_head', 'autover_add_style_and_script' );
+add_action( 'admin_head', 'autover_add_style_and_script' );
 ?>";
 highlight_string( $string ); ?>
 </p>
@@ -283,9 +283,9 @@ $string = "<?php
 function mythemename_style() {
 	\$style_url = get_stylesheet_directory_uri() . '/style.css';
 
-	wp_enqueue_style('my_style_id', \$style_url, __FILE__);
+	wp_enqueue_style( 'my_style_id', \$style_url, __FILE__ );
 }
-add_action('wp_enqueue_scripts','mythemename_style');
+add_action( 'wp_enqueue_scripts', 'mythemename_style' );
 ?>";
 highlight_string( $string ); ?>
 </p>

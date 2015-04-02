@@ -48,7 +48,7 @@ If you want to automatically version your CSS and JavaScript files, this will he
 == Changelog ==
 
 = 1.4 =
-* Cleaned upt the plugin code.
+* Cleaned up the plugin code.
 * Now the plugin uses the constants AUTOVER_DISABLE_CSS / AUTOVER_DISABLE_JS to see if it needs to ignore a resource
 * Removed admin page
 

@@ -1,10 +1,10 @@
 === AutoVer ===
-Contributors: PressLabs
+Contributors: PressLabs, olarmarius
 Donate link: http://www.presslabs.com/
-Tags: auto, automatic, pages, head, css, wp-enqueue, filter, javascript, script, style, ver, version, versioning, autover, presslabs
+Tags: auto, automatic, pages, head, css, wp-enqueue, filter, javascript, js, script, style, ver, version, versioning, autover, presslabs
 Requires at least: 3.4
-Tested up to: 3.5.1
-Stable tag: 1.3
+Tested up to: 4.1
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,12 +26,12 @@ IMPORTANT: this plugin only works with CSS and JS files that are enqueued using 
 Alternatively go into your WordPress dashboard and click on Plugins -> Add Plugin and search for AutoVer. Then click on Install, then on Activate Now.
 
 = Usage =
-Install and activate the plugin according with the Installation instructions.
+Just install and activate the plugin.
 The plugin will automatically start to version your CSS and JS files that are correctly enqueued into WordPress (by using [wp_enqueue_style](http://codex.wordpress.org/Function_Reference/wp_enqueue_style "wp_enqueue_style") and [wp_enqueue_script](http://codex.wordpress.org/Function_Reference/wp_enqueue_script "wp_enqueue_script") functions).
 
 Depending on the caching mechanism used, a purge of page (html) cache might be needed.
 
-If you want to version only CSS or only JS files, please check the plugin settings by going to 'Tools->AutoVer' from your WordPress dashboard.
+If you want to version only CSS or only JS files, please use the constants AUTOVER_DISABLE_JS and AUTOVER_DISABLE_CSS.
 
 == Frequently Asked Questions ==
 
@@ -48,9 +48,10 @@ If you want to automatically version your CSS and JavaScript files, this will he
 == Changelog ==
 
 = 1.4 =
-* Cleaned up the plugin code.
-* Now the plugin uses the constants AUTOVER_DISABLE_CSS / AUTOVER_DISABLE_JS to see if it needs to ignore a resource
-* Removed admin page
+* cleaned up the plugin code(remove the options from DB).
+* now the plugin uses the constants AUTOVER_DISABLE_CSS / AUTOVER_DISABLE_JS to see if it needs to ignore a resource.
+* removed settings page (replaced by the constants AUTOVER_DISABLE_JS and AUTOVER_DISABLE_CSS).
+* removed the file list.
 
 = 1.3 =
 * add file lists.
@@ -67,6 +68,12 @@ If you want to automatically version your CSS and JavaScript files, this will he
 * first version on WP.
 
 == Upgrade Notice ==
+
+= 1.4 =
+* Cleaned up the plugin code(remove the options from DB).
+* Now the plugin uses the constants AUTOVER_DISABLE_CSS / AUTOVER_DISABLE_JS to see if it needs to ignore a resource.
+* Removed the settings page (replaced by the constants AUTOVER_DISABLE_JS and AUTOVER_DISABLE_CSS).
+* Removed the file list.
 
 = 1.3 =
 Add file lists.

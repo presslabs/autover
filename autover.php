@@ -131,8 +131,9 @@ function autover_version_filter( $src ) {
 	if ( defined( 'AUTOVER_DISABLE_' . strtoupper( $filetype ) ) ) {
 		return $src;
 	}
+
 	$src_path = parse_url( $src, PHP_URL_PATH );
-	$filename = rtrim( ABSPATH, '/' )  . $src_path;
+	$filename = rtrim( ABSPATH, '/' )  . urldecode( $src_path );
 
 	if ( ! is_file( $filename ) ) {
 		return $src;

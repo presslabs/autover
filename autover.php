@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: AutoVer
+ * Plugin Name: Autover
  * Plugin URI: http://wordpress.org/extend/plugins/autover/
  * Description: Automatically version your CSS and JS files.
  * Author: Presslabs
@@ -44,7 +44,7 @@ function autover_options() {
 	?>
 	<div class="wrap">
 
-	<h2>AutoVer</h2>
+	<h2>Autover</h2>
 
 	<p>
 	If you want to use the functionality of this plugin you must add
@@ -106,7 +106,7 @@ function autover_options() {
 
 add_action( 'admin_menu', 'autover_menu' );
 function autover_menu() {
-	add_management_page( 'AutoVer - Options', 'AutoVer', 'administrator', __FILE__, 'autover_options' );
+	add_management_page( 'Autover - Options', 'Autover', 'administrator', __FILE__, 'autover_options' );
 }
 
 function autover_remove_query( $src ) {

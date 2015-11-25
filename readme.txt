@@ -67,6 +67,7 @@ If you want to automatically version your CSS and JavaScript files, this will he
 = 1.0 =
 * first version on WP.
 
+
 == Upgrade Notice ==
 
 = 1.4 =
@@ -86,4 +87,3 @@ Bug fix: fixed some settings error.
 
 = 1.0 =
 First version on WP.
-

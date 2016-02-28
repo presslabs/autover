@@ -54,7 +54,7 @@ function autover_version_filter( $src ) {
 	$src_with_no_query = autover_remove_query( $src );
 
 	$termination = strtolower( substr( $src_with_no_query, -3 ) );
-	( $termination === '.js' ) ? $filetype = 'js' : ( ( $termination === 'css' ) ? $filetype = 'css' : null );
+	( $termination === '.js' ) ? $filetype = 'js' : ( $filetype = ( $termination === 'css' ) ? 'css' : null );
 
 	if ( null === $filetype ) {
 		return $src;

@@ -1,0 +1,7 @@
+{
+  "redefinable-internals": [
+    "filemtime",
+    "is_file",
+    "defined"
+  ]
+}

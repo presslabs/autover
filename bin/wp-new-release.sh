@@ -29,17 +29,25 @@ fi
 
 printf "\n$0 - Upload the '${plugin_tag_release}' ${plugin_name_slug} release to the WordPress SVN repository '${wordpress_svn_url}'\n\n"
 
-mkdir new_${plugin_name_slug}_${plugin_tag_release} ; cd new_${plugin_name_slug}_${plugin_tag_release}
+mkdir new_${plugin_name_slug}_${plugin_tag_release}
+cd new_${plugin_name_slug}_${plugin_tag_release}
 wget ${plugin_release_url}
 unzip ${plugin_tag_release}.zip
-mkdir wpsvn ; cd wpsvn ; svn co ${wordpress_svn_url}
-mkdir ${plugin_name_slug}/tags/${plugin_tag_release}
-cd ${plugin_name_slug}/trunk ; rm -rf ./*
-cp -r ../../../${plugin_name_slug}-${plugin_tag_release}/${plugin_name_slug}/* ./
-cp -r ../../../${plugin_name_slug}-${plugin_tag_release}/${plugin_name_slug}/* ../tags/${plugin_tag_release}/
-cd ../ ; svn add tags/${plugin_tag_release} ; svn status
+
+svn co ${wordpress_svn_url} wpsvn
+cd wpsvn
+mkdir tags/${plugin_tag_release}
+
+rm -rf trunk/*
+cp -r ../${plugin_name_slug}-${plugin_tag_release}/src/* trunk/
+cp -r ../${plugin_name_slug}-${plugin_tag_release}/src/* tags/${plugin_tag_release}/
+
+svn add tags/${plugin_tag_release}
+svn status
 svn commit --username ${wordpress_username} --password "${wordpress_password}" -m "Add the ${plugin_tag_release} version"
-cd ../../../ ; rm -rf new_${plugin_name_slug}_${plugin_tag_release}
+
+cd ../../
+rm -rf new_${plugin_name_slug}_${plugin_tag_release}
 
 if [[ `wget -S --spider ${wordpress_svn_tag_url} 2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then
   printf "\n$0 - The new ${plugin_name_slug} tag '${plugin_tag_release}' is now on WordPress SVN repository."

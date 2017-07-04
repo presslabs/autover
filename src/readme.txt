@@ -1,10 +1,9 @@
 === Autover ===
-Contributors: PressLabs, olarmarius
-Donate link: http://www.presslabs.com/
+Contributors: Presslabs, olarmarius
+Donate link: https://www.presslabs.com/
 Tags: auto, automatic, pages, head, css, wp-enqueue, filter, javascript, js, script, style, ver, version, versioning, autover, presslabs
 Requires at least: 3.4
-Tested up to: 4.4
-Stable tag: 1.4
+Tested up to: 4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,25 +53,30 @@ The 'admin_*' hooks are designed for wp-admin area or so called Dashboard area, 
 
 == Changelog ==
 
+= 1.5 =
+* Standardised folder structure
+* Added tests for current features and improved url replacement (custom arguments now preserved)
+* Cleanup of code
+
 = 1.4 =
-* cleaned up the plugin code(remove the options from DB).
-* now the plugin uses the constants AUTOVER_DISABLE_CSS / AUTOVER_DISABLE_JS to see if it needs to ignore a resource.
-* removed settings page (replaced by the constants AUTOVER_DISABLE_JS and AUTOVER_DISABLE_CSS).
-* removed the file list.
+* Cleaned up the plugin code(remove the options from DB).
+* Now the plugin uses the constants AUTOVER_DISABLE_CSS / AUTOVER_DISABLE_JS to see if it needs to ignore a resource.
+* Removed settings page (replaced by the constants AUTOVER_DISABLE_JS and AUTOVER_DISABLE_CSS).
+* Removed the file list.
 
 = 1.3 =
-* add file lists.
+* Add file lists.
 
 = 1.2 =
-* enhancement: settings tab is now separated for easier understanding.
-* enhancement: updated readme.txt file with more details and added print screens.
-* bug fix: fixed an error at the 'filemtime()' function.
+* Enhancement: settings tab is now separated for easier understanding.
+* Enhancement: updated readme.txt file with more details and added print screens.
+* Bug fix: fixed an error at the 'filemtime()' function.
 
 = 1.1 =
-* bug fix: fixed some settings error.
+* Bug fix: fixed some settings error.
 
 = 1.0 =
-* first version on WP.
+* First version on WP.
 
 
 == Upgrade Notice ==

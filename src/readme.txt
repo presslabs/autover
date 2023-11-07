@@ -2,8 +2,8 @@
 Contributors: Presslabs, olarmarius
 Donate link: https://www.presslabs.com/
 Tags: auto, automatic, pages, head, css, wp-enqueue, filter, javascript, js, script, style, ver, version, versioning, autover, presslabs
-Requires at least: 3.4
-Tested up to: 4.8
+Requires at least: 4.7
+Tested up to: 6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

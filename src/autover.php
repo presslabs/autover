@@ -4,7 +4,7 @@
  * Plugin URI: https://wordpress.org/plugins/autover/
  * Description: Automatically version your CSS and JS files enqueued through the Wordpress API
  * Author: Presslabs
- * Version: 1.5
+ * Version: 1.6
  * Author URI: https://www.presslabs.com/
  */
 

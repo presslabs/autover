@@ -3,7 +3,7 @@ Contributors: Presslabs, olarmarius
 Donate link: https://www.presslabs.com/
 Tags: autover, presslabs, version, css, javascript
 Requires at least: 4.7
-Tested up to: 7.0
+Tested up to: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,9 @@ The 'admin_*' hooks are designed for wp-admin area or so called Dashboard area, 
 
 
 == Changelog ==
+
+= 1.9 =
+* Tested up to WP 7.1
 
 = 1.8 =
 * Tested up to WP 7.0
